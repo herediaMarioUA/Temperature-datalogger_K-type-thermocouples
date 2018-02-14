@@ -1,0 +1,70 @@
+/*
+		       Temperature datalogger
+ 
+This script uses a: 
+
+a) 4 MAX6675 boards, 
+b) 4 k-type thermocouples 
+
+ 
+ The circuit:
+ * Wiring of MAX6675 boards according to 
+   datasheet: https://goo.gl/Gy2CUq
+
+ * Watlow thermocouples (10cm lengh & 5mm thick)
+
+ 
+ created 27 Jan. 2016
+ modified 25 Feb  2017
+ by Mario Heredia
+ 
+ This example code is in the public domain.
+
+// Sample Arduino MAX6675 Arduino Sketch
+
+#include "max6675.h"
+
+int ktcSO = 8;
+int ktcCS = 9;
+int ktcCLK = 10;
+
+MAX6675 ktc(ktcCLK, ktcCS, ktcSO);
+
+int ktc1SO = 5;
+int ktc1CS = 6;
+int ktc1CLK = 7;
+
+MAX6675 kkc(ktc1CLK, ktc1CS, ktc1SO);
+
+int ktc2SO = 2;
+int ktc2CS = 3;
+int ktc2CLK = 4;
+
+MAX6675 tkc(ktc2CLK, ktc2CS, ktc2SO);
+
+int ktc3SO = 11;
+int ktc3CS = 12;
+int ktc3CLK = 13;
+
+MAX6675 ctk(ktc3CLK, ktc3CS, ktc3SO);
+  
+  
+void setup() {
+  Serial.begin(9600);
+  // give the MAX a little time to settle
+  delay(500);
+}
+
+void loop() {
+  // basic readout test
+  
+   Serial.print("T1 = "); 
+   Serial.print(ktc.readCelsius());
+   Serial.print(" T2 = ");
+   Serial.print(tkc.readCelsius());
+   Serial.print(" T3 = ");
+   Serial.println(kkc.readCelsius());
+   Serial.print(" T4 = ");
+   Serial.println(ctk.readCelsius());
+   delay(500);
+}
